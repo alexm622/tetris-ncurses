@@ -10,7 +10,7 @@ LIBS=-lm
 _DEPS = *.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =main.0
+_OBJ =main.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
