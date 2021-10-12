@@ -5,12 +5,12 @@ CFLAGS=-I$(IDIR)
 ODIR=src
 LDIR =/usr/local/lib
 
-LIBS=-lm
+LIBS=-lm -lncurses
 
 _DEPS = *.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =main.o
+_OBJ =main.o blocks.o gui.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
@@ -26,3 +26,4 @@ debug: tetris
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+	rm tetris
