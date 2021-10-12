@@ -10,17 +10,17 @@ LIBS=-lm
 _DEPS = *.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ =matrix.o encoding.o cipher.o  main.o 
+_OBJ =main.0
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
 $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-hill-cipher: $(OBJ)
+tetris: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 debug: CFLAGS += -DDEBUG -g
-debug: hill-cipher
+debug: tetris
 
 .PHONY: clean
 
