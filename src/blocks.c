@@ -43,8 +43,8 @@ Block initBlock(BLOCK b_type){
 }
 
 Pixel ** initL(){
-    Pixel * p = malloc(sizeof(Pixel));
-    Pixel ** out = calloc(4, sizeof(Pixel*));
+    struct pixel ** out = calloc(4, sizeof(struct pixel*));
+    struct pixel * p = malloc(sizeof(struct pixel*));
     for(int i = 0; i < 3; i++){
         p->empty = false;
         p->x = i;
