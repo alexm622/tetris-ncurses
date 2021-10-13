@@ -31,5 +31,11 @@ typedef struct playfield{
 
 Block initBlock(BLOCK b_type);
 Pixel ** initL();
+Pixel ** initJ();
+Pixel ** initI();
+Pixel ** initS();
+Pixel ** initZ();
+Pixel ** initO();
+Pixel ** initT();
 void print_pix(Pixel** p, int size);
 #endif
