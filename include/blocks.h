@@ -12,10 +12,24 @@ typedef enum{
     I,O,T,S,Z,L,J
 }BLOCK;
 typedef struct{
+    bool empty;
+    int x; //relative offset
+    int y; //relative position
+}Pixel;
+
+typedef struct{
     BLOCK b;
-    int w;
-    int h;
-    int** block;
+    int num_pixels;
+    Pixel ** blocks;
 }Block;
+
+typedef struct{
+    Pixel ** field;
+    int height;
+    int width; 
+}Playfield;
+
+Block initBlock(BLOCK b_type);
+Pixel ** initL();
 
 #endif
