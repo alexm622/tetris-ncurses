@@ -63,5 +63,5 @@ void draw_pixel(Pixel * p){
     if(p->empty){
         return;
     }
-    mvaddch(p->y + YOFF + 1,p->x + XOFF + 1, '#');
+    mvaddwstr(p->y + YOFF + 1,p->x + XOFF + 1, L"█");
 }

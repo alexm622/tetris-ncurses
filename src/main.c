@@ -3,6 +3,7 @@
 #include <curses.h>
 #include <stdlib.h>
 #include <time.h>
+#include <locale.h>
 
 #include <gui.h>
 #include <blocks.h>
@@ -12,6 +13,7 @@
 int main(void)
 {
     int maxlines, maxcols;
+    setlocale(LC_ALL, "");
     srand(time(NULL));
 
     /* initialize curses */

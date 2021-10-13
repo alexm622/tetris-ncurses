@@ -1,11 +1,11 @@
 IDIR=include
 CC=gcc
-CFLAGS=-I$(IDIR)
+CFLAGS=-I$(IDIR) -D_XOPEN_SOURCE_EXTENDED
 
 ODIR=src
 LDIR =/usr/local/lib
 
-LIBS=-lm -lncurses
+LIBS=-lm -lncursesw 
 
 _DEPS = *.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))

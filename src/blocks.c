@@ -60,3 +60,10 @@ Pixel ** initL(){
 
 
 }
+
+void print_pix(Pixel** p, int size){
+    for(int i = 0; i < size; i++){
+        printf("%i,",p[i]->x);
+        printf("%i\n",p[i]->y);
+    }
+}
