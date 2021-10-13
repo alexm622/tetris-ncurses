@@ -11,19 +11,19 @@ extern bool jBlock[2][3];
 typedef enum{
     I,O,T,S,Z,L,J
 }BLOCK;
-typedef struct{
+typedef struct pixel{
     bool empty;
     int x; //relative offset
     int y; //relative position
 }Pixel;
 
-typedef struct{
+typedef struct block{
     BLOCK b;
     int num_pixels;
     Pixel ** blocks;
 }Block;
 
-typedef struct{
+typedef struct playfield{
     Pixel ** field;
     int height;
     int width; 
