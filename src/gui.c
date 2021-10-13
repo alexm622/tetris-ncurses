@@ -65,3 +65,36 @@ void draw_pixel(Pixel * p){
     }
     mvaddwstr(p->y + YOFF + 1,p->x + XOFF + 1, L"█");
 }
+
+void draw_score(int score){
+    mvprintw(HEIGHT + YOFF + 2, XOFF, "Score: %d", score);
+}
+
+void draw_playfield(Playfield * pf){
+    for(int i = 0; i < pf->height; i++){
+        for(int j = 0; j < pf->width; j++){
+            draw_pixel(pf->field[i][j]);
+        }
+    }
+}
+
+Playfield * initialize_playfield(int width, int height){
+    Playfield * pf = malloc(sizeof(Playfield));
+    pf->width = width;
+    pf->height = height;
+    pf->field = malloc(sizeof(Pixel *) * height);
+    for(int i = 0; i < height; i++){
+        pf->field[i] = malloc(sizeof(Pixel) * width);
+        for(int j = 0; j < width; j++){
+            //make new pixels
+            Pixel * p = malloc(sizeof(Pixel));
+            p->x = j;
+            p->y = i;
+            p->empty = true;
+            pf->field[i][j] = p;
+        }
+    }
+    return pf;
+}
+
+

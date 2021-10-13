@@ -24,7 +24,7 @@ typedef struct block{
 }Block;
 
 typedef struct playfield{
-    Pixel ** field;
+    Pixel *** field;
     int height;
     int width; 
 }Playfield;

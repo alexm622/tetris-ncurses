@@ -4,15 +4,19 @@
 #include <stdlib.h>
 #include <time.h>
 #include <locale.h>
+#include <unistd.h>
+
+#include <main.h>
 
 #include <gui.h>
 #include <blocks.h>
 
 #define ITERMAX 10000
+int maxlines, maxcols;
 
 int main(void)
 {
-    int maxlines, maxcols;
+    curs_set(FALSE);
     setlocale(LC_ALL, "");
     srand(time(NULL));
 
@@ -24,18 +28,38 @@ int main(void)
 
     clear();
 
-    maxlines = LINES - 1;
-    maxcols = COLS - 1;
+    
 
-    draw_gui(0,0);
-    BLOCK newblock = I;
-    Block b = initBlock(newblock);
-    draw_block(b);
+    //the update loop
+    draw_gui(0, 0);
+    refresh();
+    
+    //loop that updates the screen at a constant rate
+    while(1)
+    {
+        usleep(16700);
+        tick();
+        update();
 
+    }
+
+    
     refresh();
 
     getch();
     endwin();
 
     exit(0);
+}
+
+void update(){
+    maxlines = LINES - 1;
+    maxcols = COLS - 1;
+    draw_gui(0,0);
+
+    refresh();
+}
+
+void tick(){
+    
 }
