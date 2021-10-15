@@ -169,3 +169,28 @@ void print_pix(Pixel **p, int size) {
     printf("%i\n", p[i]->y);
   }
 }
+
+BLOCK blockGenerator(){
+  int r = rand();
+  r %= 7;
+  switch (r)
+  {
+  case 0:
+    return I;
+  case 1:
+    return J;
+  case 2:
+    return L;
+  case 3:
+    return O;
+  case 4:
+    return S;
+  case 5:
+    return Z;
+  case 6:
+    return T;
+  default:
+    return O;
+    break;
+  }
+}

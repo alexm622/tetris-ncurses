@@ -37,5 +37,8 @@ Pixel ** initS();
 Pixel ** initZ();
 Pixel ** initO();
 Pixel ** initT();
+
 void print_pix(Pixel** p, int size);
+
+BLOCK blockGenerator();
 #endif

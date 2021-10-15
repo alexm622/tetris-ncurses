@@ -10,8 +10,8 @@
 
 #include <gui.h>
 #include <blocks.h>
+#include <game.h>
 
-#define ITERMAX 10000
 int maxlines, maxcols;
 
 int main(void)
@@ -34,16 +34,21 @@ int main(void)
     draw_gui(0, 0);
     refresh();
 
-    Block b = initBlock(I);
+    Block b = initBlock(blockGenerator());
     draw_block(b);
     refresh();
+
+    Playfield* p = initialize_playfield(WIDTH,HEIGHT);
 
     //loop that updates the screen at a constant rate
     while(1)
     {
-        usleep(16700);
         tick();
+        updateBlock(b);
+        draw_block(b);
         update();
+        usleep(1000000);
+        clear();
 
     }
 
@@ -57,6 +62,7 @@ int main(void)
 }
 
 void update(){
+    
     maxlines = LINES - 1;
     maxcols = COLS - 1;
     draw_gui(0,0);

@@ -5,10 +5,7 @@
 
 #include <blocks.h>
 
-#define WIDTH 20
-#define HEIGHT 40
-#define XOFF 60
-#define YOFF 2
+
 
 void draw_gui(int x, int y){
     mvprintw(y, x," _______  _______  _______  ______    ___   _______ ");
