@@ -72,8 +72,8 @@ void draw_score(int score){
 }
 
 void draw_playfield(Playfield * pf){
-    for(int i = 0; i < pf->height; i++){
-        for(int j = 0; j < pf->width; j++){
+    for(int i = 0; i < pf->width; i++){
+        for(int j = 0; j < pf->height; j++){
             draw_pixel(pf->field[i][j]);
         }
     }
@@ -89,8 +89,8 @@ Playfield * initialize_playfield(int width, int height){
         for(int j = 0; j < height; j++){
             //make new pixels
             Pixel * p = malloc(sizeof(struct pixel));
-            p->x = j;
-            p->y = i;
+            p->x = i;
+            p->y = j;
             p->empty = true;
             pf->field[i][j] = p;
         }

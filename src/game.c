@@ -4,15 +4,15 @@
 #include <gui.h>
 
 bool updateBlock(Block b, int dy, int dx){
-    shiftBlockY(b, dy);
-    shiftBlockX(b, dx);
-
+    
+    bool out = shiftBlockY(b, dy) && shiftBlockX(b, dx);
+    return out;
 }
 
 bool shiftBlockX(Block b, int dx){
     for(int i = 0; i<b.num_pixels; i++){
         Pixel * p = b.blocks[i];
-        if((p->x + dx >= WIDTH || p->x + dx < 0)){
+        if((p->x + dx > WIDTH || p->x + dx < 0)){
             return false;
         }
     }
@@ -24,9 +24,19 @@ bool shiftBlockX(Block b, int dx){
 }
 
 bool shiftBlockY(Block b, int dy){
+    //find the lowest point pixel
+    int array[b.num_pixels];
+    int y_low_ind = 0;
+    int lowy = b.blocks[0]->y;
+    for(int i = 0; i < b.num_pixels; i++){
+        if(b.blocks[i]->y < lowy){
+            y_low_ind = i;
+            lowy = b.blocks[i]->y;
+        }
+    }
     for(int i = 0; i<b.num_pixels; i++){
-        Pixel * p = b.blocks[i];
-        if((p->y + dy >= HEIGHT || p->y + dy < 0 )){
+        Pixel * p = b.blocks[(i+y_low_ind)%b.num_pixels];
+        if((p->y + dy >= HEIGHT)){
             return false;
         }
     }
@@ -44,9 +54,6 @@ void addToPlayfield(Block *b, Playfield* p){
         int y = b->blocks[i]->y;
         Pixel* pix = p->field[x][y];
         //we'll memcopy this instead of copying the register
-        //memcpy(pix, b->blocks[i], sizeof(struct pixel *));
-        pix->x = x;
-        pix->y = y;
-        pix->empty = false;
+        memcpy(pix, b->blocks[i], sizeof(struct pixel *));
     }
 }

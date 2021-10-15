@@ -13,6 +13,7 @@
 #include <game.h>
 
 int maxlines, maxcols;
+Playfield* p;
 
 int main(void)
 {
@@ -41,7 +42,7 @@ int main(void)
     refresh();
 
     Block b = initBlock(blockGenerator());
-    Playfield* p = initialize_playfield(WIDTH,HEIGHT);
+    p = initialize_playfield(WIDTH,HEIGHT);
     bool block_update;
     //loop that updates the screen at a constant rate
     while(1)
@@ -73,14 +74,15 @@ int main(void)
         flushinp();
         usleep(100000);
         if(block_update){
-            bool bx = shiftBlockX(b, dx);
-            bool by = shiftBlockY(b, dy);
+            bool bx = !shiftBlockX(b, dx);
+            bool by = !shiftBlockY(b, dy);
             if(by){
                 addToPlayfield(&b, p);
+                b = initBlock(blockGenerator());
             }
             block_update = false;
         }else{
-            block_update = updateBlock(b, dy, dx);
+            block_update = !updateBlock(b, dy, dx);
         }
         
         clear();
@@ -100,6 +102,7 @@ void update(){
     maxlines = LINES - 1;
     maxcols = COLS - 1;
     draw_gui(0,0);
+    draw_playfield(p);
 
     refresh();
 }
