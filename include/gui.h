@@ -7,8 +7,9 @@
 #define YOFF 2
 
 #include <blocks.h>
+#include <curses.h>
 
-void draw_gui();
+WINDOW* draw_gui();
 void draw_block(Block b);
 void draw_pixel(Pixel * p);
 void draw_playfield(Playfield * pf);

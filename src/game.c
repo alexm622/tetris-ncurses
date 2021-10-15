@@ -1,14 +1,16 @@
 #include <game.h>
 #include <gui.h>
 
-bool updateBlock(Block b){
-    shiftBlockY(b, 1);
+bool updateBlock(Block b, int dy, int dx){
+    shiftBlockY(b, dy);
+    shiftBlockX(b, dx);
+
 }
 
 bool shiftBlockX(Block b, int dx){
     for(int i = 0; i<b.num_pixels; i++){
         Pixel * p = b.blocks[i];
-        if((p->x + dx > WIDTH || p->y + dx < 0)){
+        if((p->x + dx >= WIDTH || p->x + dx < 0)){
             return false;
         }
     }
@@ -22,7 +24,7 @@ bool shiftBlockX(Block b, int dx){
 bool shiftBlockY(Block b, int dy){
     for(int i = 0; i<b.num_pixels; i++){
         Pixel * p = b.blocks[i];
-        if((p->y + dy > HEIGHT-1 || p->y + dy < 0 )){
+        if((p->y + dy >= HEIGHT || p->y + dy < 0 )){
             return false;
         }
     }

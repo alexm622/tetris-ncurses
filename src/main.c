@@ -28,10 +28,16 @@ int main(void)
 
     clear();
 
+    WINDOW *tetris_win;
+    
+
     
 
     //the update loop
-    draw_gui(0, 0);
+    tetris_win = draw_gui(0, 0);
+    keypad(tetris_win, true);
+    nodelay(tetris_win, true);
+    cbreak();
     refresh();
 
     Block b = initBlock(blockGenerator());
@@ -43,11 +49,34 @@ int main(void)
     //loop that updates the screen at a constant rate
     while(1)
     {
+        int dx,dy;
+        int down = wgetch(tetris_win);
+        switch (down)
+        {
+        case KEY_UP:
+            dy = -1;
+            break;
+        case KEY_DOWN:
+            dy = 2;
+            break;
+        case KEY_LEFT:
+            dx = -1;
+            break;
+        case KEY_RIGHT:
+            dx = 1;
+            break;
+        default:
+            dy = 1;
+            dx = 0;
+            break;
+        }
         tick();
-        updateBlock(b);
+        updateBlock(b, dy, dx);
         draw_block(b);
+        
         update();
-        usleep(1000000);
+        flushinp();
+        usleep(100000);
         clear();
 
     }
