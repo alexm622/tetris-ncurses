@@ -6,4 +6,6 @@ bool updateBlock(Block b, int dy, int dx);
 bool shiftBlockX(Block b, int dx);
 bool shiftBlockY(Block b, int dy);
 
+void addToPlayfield(Block *b, Playfield* p);
+
 #endif

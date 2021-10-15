@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include <game.h>
 #include <gui.h>
 
@@ -33,4 +35,15 @@ bool shiftBlockY(Block b, int dy){
         p->y += dy;
     }
     return true;
+}
+
+void addToPlayfield(Block *b, Playfield* p){
+    int num_block = b->num_pixels;
+    for(int i =0; i < num_block; i++){
+        int x = b->blocks[i]->x;
+        int y = b->blocks[i]->y;
+        Pixel* pix = p->field[x][y];
+        //we'll memcopy this instead of copying the register
+        memcpy(pix, b->blocks[i], sizeof(Pixel*));
+    }
 }

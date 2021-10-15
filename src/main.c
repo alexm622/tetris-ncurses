@@ -41,11 +41,8 @@ int main(void)
     refresh();
 
     Block b = initBlock(blockGenerator());
-    draw_block(b);
-    refresh();
-
     Playfield* p = initialize_playfield(WIDTH,HEIGHT);
-
+    bool block_update;
     //loop that updates the screen at a constant rate
     while(1)
     {
@@ -71,12 +68,17 @@ int main(void)
             break;
         }
         tick();
-        updateBlock(b, dy, dx);
         draw_block(b);
-        
         update();
         flushinp();
         usleep(100000);
+        if(block_update){
+            //addToPlayfield(&b, p);
+            block_update = false;
+        }else{
+            block_update = updateBlock(b, dy, dx);
+        }
+        
         clear();
 
     }
