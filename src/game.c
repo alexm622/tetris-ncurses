@@ -44,6 +44,9 @@ void addToPlayfield(Block *b, Playfield* p){
         int y = b->blocks[i]->y;
         Pixel* pix = p->field[x][y];
         //we'll memcopy this instead of copying the register
-        memcpy(pix, b->blocks[i], sizeof(Pixel*));
+        //memcpy(pix, b->blocks[i], sizeof(struct pixel *));
+        pix->x = x;
+        pix->y = y;
+        pix->empty = false;
     }
 }

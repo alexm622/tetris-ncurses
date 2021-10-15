@@ -73,7 +73,11 @@ int main(void)
         flushinp();
         usleep(100000);
         if(block_update){
-            //addToPlayfield(&b, p);
+            bool bx = shiftBlockX(b, dx);
+            bool by = shiftBlockY(b, dy);
+            if(by){
+                addToPlayfield(&b, p);
+            }
             block_update = false;
         }else{
             block_update = updateBlock(b, dy, dx);
@@ -82,7 +86,6 @@ int main(void)
         clear();
 
     }
-
     
     refresh();
 

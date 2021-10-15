@@ -80,15 +80,15 @@ void draw_playfield(Playfield * pf){
 }
 
 Playfield * initialize_playfield(int width, int height){
-    Playfield * pf = malloc(sizeof(Playfield));
+    Playfield * pf = malloc(sizeof(struct playfield));
     pf->width = width;
     pf->height = height;
-    pf->field = malloc(sizeof(Pixel *) * height);
-    for(int i = 0; i < height; i++){
-        pf->field[i] = malloc(sizeof(Pixel) * width);
-        for(int j = 0; j < width; j++){
+    pf->field = malloc(sizeof(struct pixel**) * width);
+    for(int i = 0; i < width; i++){
+        pf->field[i] = malloc(sizeof(struct pixel*) * height);
+        for(int j = 0; j < height; j++){
             //make new pixels
-            Pixel * p = malloc(sizeof(Pixel));
+            Pixel * p = malloc(sizeof(struct pixel));
             p->x = j;
             p->y = i;
             p->empty = true;
