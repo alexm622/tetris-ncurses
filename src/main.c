@@ -33,7 +33,11 @@ int main(void)
     //the update loop
     draw_gui(0, 0);
     refresh();
-    
+
+    Block b = initBlock(I);
+    draw_block(b);
+    refresh();
+
     //loop that updates the screen at a constant rate
     while(1)
     {
