@@ -194,3 +194,11 @@ BLOCK blockGenerator(){
     break;
   }
 }
+
+void freeBlockElements(Block * b){
+  int num_pixels = b->num_pixels;
+  for(int i = 0; i < num_pixels; i++){
+    free(b->pixels[i]);
+  }
+  free(b->pixels);
+}

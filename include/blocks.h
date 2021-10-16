@@ -41,4 +41,6 @@ Pixel ** initT();
 void print_pix(Pixel** p, int size);
 
 BLOCK blockGenerator();
+
+void freeBlockElements(Block * b);
 #endif

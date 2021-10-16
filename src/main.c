@@ -5,6 +5,7 @@
 #include <time.h>
 #include <locale.h>
 #include <unistd.h>
+#include <signal.h>
 
 #include <main.h>
 
@@ -15,8 +16,15 @@
 int maxlines, maxcols;
 Playfield* p;
 
+void signal_callback_handler(int signum){
+    endwin();
+    exit(0);
+}
+
+
 int main(void)
 {
+    signal(SIGINT, signal_callback_handler);
     curs_set(FALSE);
     setlocale(LC_ALL, "");
     srand(time(NULL));

@@ -50,6 +50,7 @@ void addToPlayfield(Block *b, Playfield* p){
         //we'll memcopy this instead of copying the register
         memcpy(pix, b->pixels[i], sizeof(struct pixel *));
     }
+    freeBlockElements(b);
 }
 //check this after regular bounds checking or it will segfault
 
