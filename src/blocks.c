@@ -30,28 +30,28 @@ Block initBlock(BLOCK b_type) {
   switch (b_type)
   {
   case I:
-    out.blocks = initI();
+    out.pixels = initI();
     break;
   case J:
-    out.blocks = initJ();
+    out.pixels = initJ();
     break;
   case L:
-    out.blocks = initL();
+    out.pixels = initL();
     break;
   case O:
-    out.blocks = initO();
+    out.pixels = initO();
     break;
   case S:
-    out.blocks = initS();
+    out.pixels = initS();
     break;
   case Z:
-    out.blocks = initZ();
+    out.pixels = initZ();
     break;
   case T:
-    out.blocks = initT();
+    out.pixels = initT();
     break;
   default:
-    out.blocks = initO();
+    out.pixels = initO();
     break;
   }
   return out;

@@ -56,7 +56,7 @@ WINDOW* draw_gui(int x, int y){
 void draw_block(Block b){
     int num = b.num_pixels;
     for(int i = 0; i < num; i++){
-        draw_pixel(b.blocks[i]);
+        draw_pixel(b.pixels[i]);
     }
 }
 

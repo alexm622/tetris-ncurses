@@ -53,3 +53,9 @@ dkms.conf
 
 #compiled exe
 tetris
+
+
+#ccls stuff
+.ccls-cache/
+.ccls
+compile_commands.json

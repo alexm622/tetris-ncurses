@@ -76,13 +76,17 @@ int main(void)
         if(block_update){
             bool bx = !shiftBlockX(b, dx);
             bool by = !shiftBlockY(b, dy);
-            if(by){
-                addToPlayfield(&b, p);
-                b = initBlock(blockGenerator());
+            if(!bx){
+                if(playfieldCollisionCheckX(b,p,dx)){
+                    if(by || !playfieldCollisionCheckY(b,p,dy)){
+                        addToPlayfield(&b, p);
+                        b = initBlock(blockGenerator());
+                    }
+                }
             }
             block_update = false;
         }else{
-            block_update = !updateBlock(b, dy, dx);
+            block_update = !updateBlock(b, p, dy, dx);
         }
         
         clear();

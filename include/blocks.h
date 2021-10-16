@@ -20,7 +20,7 @@ typedef struct pixel{
 typedef struct block{
     BLOCK b;
     int num_pixels;
-    Pixel ** blocks;
+    Pixel ** pixels;
 }Block;
 
 typedef struct playfield{
