@@ -3,10 +3,10 @@
 #include <game.h>
 #include <gui.h>
 
-bool updateBlock(Block b, Playfield* p, int dy, int dx){
+bool updateBlock(Block b, Playfield* p, int dy, int dx, bool drop){
     
     
-    bool out = playfieldCollisionCheck(b, p, dx, dy);
+    bool out = playfieldCollisionCheck(b, p, dx, dy, drop);
     return out;
 }
 
@@ -54,7 +54,29 @@ void addToPlayfield(Block *b, Playfield* p){
 }
 //check this after regular bounds checking or it will segfault
 
-bool playfieldCollisionCheck(Block b, Playfield* p, int dx, int dy){
+bool playfieldCollisionCheck(Block b, Playfield* p, int dx, int dy, bool drop){
+    if(drop){
+        int dy_n = 0;
+        for(int i = 0; i <=  HEIGHT; i++){
+            bool out_y = shiftBlockY(b, i);        
+            if(!out_y){
+                dy_n = i;
+                break;
+            }
+        }
+        for(int i = 0; i < dy_n; i++){
+            bool pf_col_y = playfieldCollisionCheckY(b,p,i);
+            if(!pf_col_y){
+                dy_n = i;
+                break;
+            }
+        }
+        for(int i = 0; i<b.num_pixels; i++){
+            Pixel * p = b.pixels[i];
+            p->y += dy_n-1;
+        }
+        return true;
+    }
     bool out_x = shiftBlockX(b,dx);
     bool out_y = shiftBlockY(b, dy);
     bool out = out_x && out_y;

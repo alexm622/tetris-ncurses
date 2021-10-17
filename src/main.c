@@ -15,9 +15,13 @@
 
 int maxlines, maxcols;
 Playfield* p;
+WINDOW *tetris_win;
+Block b;
 
 void signal_callback_handler(int signum){
     endwin();
+    freePlayfield(p);
+    freeBlockElements(&b);
     exit(0);
 }
 
@@ -37,7 +41,6 @@ int main(void)
 
     clear();
 
-    WINDOW *tetris_win;
     
 
     
@@ -49,13 +52,14 @@ int main(void)
     cbreak();
     refresh();
 
-    Block b = initBlock(blockGenerator());
+    b = initBlock(blockGenerator());
     p = initialize_playfield(WIDTH,HEIGHT);
-    bool block_update;
+    bool block_update = true;
     //loop that updates the screen at a constant rate
     while(1)
     {
         int dx,dy;
+        bool drop = false;
         int down = wgetch(tetris_win);
         switch (down)
         {
@@ -70,6 +74,9 @@ int main(void)
             break;
         case KEY_RIGHT:
             dx = 1;
+            break;
+        case ' ':
+            drop = true;
             break;
         default:
             dy = 1;
@@ -94,7 +101,12 @@ int main(void)
             }
             block_update = false;
         }else{
-            block_update = !updateBlock(b, p, dy, dx);
+            block_update = !updateBlock(b, p, dy, dx, drop);
+            if(drop){
+                addToPlayfield(&b, p);
+                b = initBlock(blockGenerator());
+            }
+            drop = false;
         }
         
         clear();

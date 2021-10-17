@@ -1,5 +1,6 @@
 #include <blocks.h>
 
+#include <gui.h>
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -105,14 +106,14 @@ Pixel **initI() {
 }
 Pixel **initS() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
-  struct pixel *p = malloc(sizeof(struct pixel));
+  struct pixel *p;
   for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 2; j++) {
+      p = malloc(sizeof(struct pixel));
       p->empty = false;
       p->x = i + j;
       p->y = 1 - i;
       out[i * 2 + j] = p;
-      p = malloc(sizeof(struct pixel));
     }
   }
   return out;
@@ -201,4 +202,15 @@ void freeBlockElements(Block * b){
     free(b->pixels[i]);
   }
   free(b->pixels);
+}
+
+void freePlayfield(Playfield * p){
+  for(int i = 0; i< WIDTH; i++){
+    for(int j = 0; j < HEIGHT; j++){
+      free(p->field[i][j]);
+    }
+    free(p->field[i]);
+  }
+  free(p->field);
+  free(p);
 }

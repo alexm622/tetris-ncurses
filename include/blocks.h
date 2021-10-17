@@ -43,4 +43,5 @@ void print_pix(Pixel** p, int size);
 BLOCK blockGenerator();
 
 void freeBlockElements(Block * b);
+void freePlayfield(Playfield* p);
 #endif
