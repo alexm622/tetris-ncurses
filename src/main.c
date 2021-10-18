@@ -55,6 +55,7 @@ int main(void)
     b = initBlock(blockGenerator());
     p = initialize_playfield(WIDTH,HEIGHT);
     bool block_update = true;
+    bool go = false;
     //loop that updates the screen at a constant rate
     while(1)
     {
@@ -91,9 +92,13 @@ int main(void)
         if(block_update){
             bool bx = !shiftBlockX(b, dx);
             bool by = !shiftBlockY(b, dy);
+            
             if(!bx){
                 if(playfieldCollisionCheckX(b,p,dx)){
                     if(by || !playfieldCollisionCheckY(b,p,dy)){
+                        if(go){
+                            break;
+                        }
                         addToPlayfield(&b, p);
                         b = initBlock(blockGenerator());
                     }
@@ -103,16 +108,20 @@ int main(void)
         }else{
             block_update = !updateBlock(b, p, dy, dx, drop);
             if(drop){
+                go = gameOverCheck(b);
+                if(go){
+                    break;
+                }
                 addToPlayfield(&b, p);
                 b = initBlock(blockGenerator());
             }
             drop = false;
         }
-        
         clear();
-
     }
     
+    //something something game over
+
     refresh();
 
     getch();

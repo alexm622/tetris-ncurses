@@ -12,4 +12,5 @@ bool playfieldCollisionCheck(Block b, Playfield* p, int dx, int dy, bool drop);
 bool playfieldCollisionCheckX(Block b, Playfield* p, int dx);
 bool playfieldCollisionCheckY(Block b, Playfield* p, int dy);
 
+bool gameOverCheck(Block b);
 #endif
