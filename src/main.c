@@ -17,7 +17,11 @@ int maxlines, maxcols;
 Playfield* p;
 WINDOW *tetris_win;
 Block b;
-
+/**
+ * @brief handle the ctrl+c from user and clear memory on ctrl-c
+ * 
+ * @param signum 
+ */
 void signal_callback_handler(int signum){
     endwin();
     freePlayfield(p);
@@ -25,7 +29,11 @@ void signal_callback_handler(int signum){
     exit(0);
 }
 
-
+/**
+ * @brief the main entry point of the program
+ * 
+ * @return int return code
+ */
 int main(void)
 {
     signal(SIGINT, signal_callback_handler);
@@ -85,7 +93,6 @@ int main(void)
             break;
         }
         tick();
-        draw_block(b);
         update();
         flushinp();
         usleep(100000);
@@ -127,15 +134,18 @@ int main(void)
     getch();
     endwin();
 
-    exit(0);
+    signal_callback_handler(0);
 }
-
+/**
+ * @brief the update method that is called to redraw the gui
+ * 
+ */
 void update(){
-    
     maxlines = LINES - 1;
     maxcols = COLS - 1;
     draw_gui(0,0);
     draw_playfield(p);
+    draw_block(b);
 
     refresh();
 }

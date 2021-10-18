@@ -2,31 +2,39 @@
 #define BLOCKS_H
 #include <stdbool.h>
 extern bool iBlock[1][4];
-extern bool oBlock[2][2];
-extern bool tBlock[3][2];
-extern bool sBlock[3][2];
-extern bool zBlock[3][2];
-extern bool lBlock[2][3];
-extern bool jBlock[2][3];
+/**
+ * @brief an enum of all the block types
+ * 
+ */
 typedef enum{
     I,O,T,S,Z,L,J
 }BLOCK;
+/**
+ * @brief the pixel object
+ * 
+ */
 typedef struct pixel{
     bool empty;
-    int x; //relative offset
-    int y; //relative position
+    int x; /** the x position of the pixel*/
+    int y; /** the y position of the pixel*/
 }Pixel;
-
+/**
+ * @brief the block object
+ * 
+ */
 typedef struct block{
-    BLOCK b;
-    int num_pixels;
-    Pixel ** pixels;
+    BLOCK b; /** the block enum name*/
+    int num_pixels; /** the number of pixels in the block object */ // this might be unecessary, as it'll always be for
+    Pixel ** pixels; /** all the pixels in the block */
 }Block;
-
+/**
+ * @brief the whole playfield
+ * 
+ */
 typedef struct playfield{
-    Pixel *** field;
-    int height;
-    int width; 
+    Pixel *** field; /** a 2d array of pixel projects */
+    int height; /** the height of the playfield*/
+    int width; /** the width of the playfield*/
 }Playfield;
 
 Block initBlock(BLOCK b_type);
@@ -37,8 +45,6 @@ Pixel ** initS();
 Pixel ** initZ();
 Pixel ** initO();
 Pixel ** initT();
-
-void print_pix(Pixel** p, int size);
 
 BLOCK blockGenerator();
 

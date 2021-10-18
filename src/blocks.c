@@ -6,24 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-bool iBlock[1][4] = {{true, true, true, true}};
-
-bool oBlock[2][2] = {{true, true}, {true, true}};
-bool tBlock[3][2] = {{true, false},
-                     {
-                         true,
-                         true,
-                     },
-                     {true, false}};
-bool zBlock[3][2] = {{false, true}, {true, true}, {true, false}};
-bool sBlock[3][2] = {{true, false}, {true, true}, {false, true}};
-bool lBlock[2][3] = {
-    {true, true, true},
-    {true, false, false},
-
-};
-bool jBlock[2][3] = {{true, false, false}, {true, true, true}};
-
+/**
+ * @brief create a new block pointer/object
+ * 
+ * @param b_type the block type as an enum
+ * @return Block 
+ */
 Block initBlock(BLOCK b_type) {
   Block out;
   out.num_pixels = 4;
@@ -57,7 +45,11 @@ Block initBlock(BLOCK b_type) {
   }
   return out;
 }
-
+/**
+ * @brief init the block L
+ * 
+ * @return Pixel** 
+ */
 Pixel **initL() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -75,6 +67,11 @@ Pixel **initL() {
   out[3] = p;
   return out;
 }
+/**
+ * @brief init the block J
+ * 
+ * @return Pixel** 
+ */
 Pixel **initJ() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -92,6 +89,11 @@ Pixel **initJ() {
   out[3] = p;
   return out;
 }
+/**
+ * @brief init the block I
+ * 
+ * @return Pixel** 
+ */
 Pixel **initI() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -104,6 +106,11 @@ Pixel **initI() {
   }
   return out;
 }
+/**
+ * @brief init the block S
+ * 
+ * @return Pixel** 
+ */
 Pixel **initS() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -118,6 +125,11 @@ Pixel **initS() {
   }
   return out;
 }
+/**
+ * @brief init the block Z
+ * 
+ * @return Pixel** 
+ */
 Pixel **initZ() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -132,6 +144,11 @@ Pixel **initZ() {
   }
   return out;
 }
+/**
+ * @brief init the block O
+ * 
+ * @return Pixel** 
+ */
 Pixel **initO() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -146,6 +163,11 @@ Pixel **initO() {
   }
   return out;
 }
+/**
+ * @brief init a block of type T
+ * 
+ * @return Pixel** 
+ */
 Pixel **initT() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
   struct pixel *p;
@@ -163,14 +185,11 @@ Pixel **initT() {
   out[3] = p;
   return out;
 }
-
-void print_pix(Pixel **p, int size) {
-  for (int i = 0; i < size; i++) {
-    printf("%i,", p[i]->x);
-    printf("%i\n", p[i]->y);
-  }
-}
-
+/**
+ * @brief generate a random block
+ * 
+ * @return BLOCK 
+ */
 BLOCK blockGenerator(){
   int r = rand();
   r %= 7;
@@ -195,7 +214,11 @@ BLOCK blockGenerator(){
     break;
   }
 }
-
+/**
+ * @brief free all the elements/pixels in block b
+ * 
+ * @param b 
+ */
 void freeBlockElements(Block * b){
   int num_pixels = b->num_pixels;
   for(int i = 0; i < num_pixels; i++){
@@ -203,9 +226,14 @@ void freeBlockElements(Block * b){
   }
   free(b->pixels);
 }
-
+/**
+ * @brief free the playfield
+ * 
+ * @param p the playfield object as a pointer
+ */
 void freePlayfield(Playfield * p){
   for(int i = 0; i< WIDTH; i++){
+    //free whole row on column i
     for(int j = 0; j < HEIGHT; j++){
       free(p->field[i][j]);
     }

@@ -1,7 +1,6 @@
 #ifndef GUI_H
 #define GUI_H
-
-#define WIDTH 20
+#define WIDTH 20 
 #define HEIGHT 40
 #define XOFF 60
 #define YOFF 2

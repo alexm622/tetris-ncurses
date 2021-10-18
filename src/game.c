@@ -8,7 +8,14 @@ bool updateBlock(Block b, Playfield *p, int dy, int dx, bool drop) {
   bool out = playfieldCollisionCheck(b, p, dx, dy, drop);
   return out;
 }
-
+/**
+ * @brief test to see if the block can be shifted on the x axis without leaving the playarea
+ * 
+ * @param b 
+ * @param dx 
+ * @return true 
+ * @return false 
+ */
 bool shiftBlockX(Block b, int dx) {
   for (int i = 0; i < b.num_pixels; i++) {
     Pixel *p = b.pixels[i];
@@ -19,7 +26,14 @@ bool shiftBlockX(Block b, int dx) {
 
   return true;
 }
-
+/**
+ * @brief test to see if the block can be shifted dy units without leaving the playarea
+ * 
+ * @param b 
+ * @param dy 
+ * @return true 
+ * @return false 
+ */
 bool shiftBlockY(Block b, int dy) {
   // find the lowest point pixel
   int array[b.num_pixels];
@@ -39,7 +53,12 @@ bool shiftBlockY(Block b, int dy) {
   }
   return true;
 }
-
+/**
+ * @brief add the block to the playfield
+ * 
+ * @param b 
+ * @param p 
+ */
 void addToPlayfield(Block *b, Playfield *p) {
   int num_block = b->num_pixels;
   for (int i = 0; i < num_block; i++) {
@@ -89,30 +108,40 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     }
     return true;
   }
-  bool out_x = shiftBlockX(b, dx);
-  bool out_y = shiftBlockY(b, dy);
-  bool out = out_x && out_y;
-  bool pf_x, pf_y;
+
+  bool out_x = shiftBlockX(b, dx); /** can the block be shifted the dx? */
+  bool out_y = shiftBlockY(b, dy); /** can the block be shifted the dy?*/
+  bool out = out_x && out_y; /** can the block be shifted the requested amount?*/
+  bool pf_x /**can the block be shifted on the playfield x?*/, pf_y /**can the block be shifted on the playfield y*/; 
+  //we need to test to see if the block is in bounds or else the program will segfault
   if (out_x) {
+    //test to see if the block can be shifted on the x axis
     pf_x = playfieldCollisionCheckX(b, p, dx);
+    //if the block can be shifted in the desired way we will drop it
     if (pf_x) {
       for (int i = 0; i < b.num_pixels; i++) {
         Pixel *p = b.pixels[i];
         p->x += dx;
       }
     }
+    //and operation with pf_x and out
     out &= pf_x;
   }
+  //we need to test this so the program doesn't segfault
   if (out_y) {
+    //test to see if the block can be shifted on the y axis
     pf_y = playfieldCollisionCheckY(b, p, dy);
+    //if it can then shift it
     if (pf_y) {
       for (int i = 0; i < b.num_pixels; i++) {
         Pixel *p = b.pixels[i];
         p->y += dy;
       }
     }
+    //and operation with pf_x and out
     out &= pf_y;
   }
+  //return whether or not the block was shifted
   return out;
 }
 /**
