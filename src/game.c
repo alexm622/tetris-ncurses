@@ -121,8 +121,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     }
     // shift the block down as far as it can go
     for (int i = 0; i < b.num_pixels; i++) {
-      Pixel *p = b.pixels[i];
-      p->y += dy_n - 1;
+      Pixel *pix = b.pixels[i];
+      pix->y += dy_n - 1;
     }
     return true;
   }
@@ -141,8 +141,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     // if the block can be shifted in the desired way we will drop it
     if (pf_x) {
       for (int i = 0; i < b.num_pixels; i++) {
-        Pixel *p = b.pixels[i];
-        p->x += dx;
+        Pixel *pix = b.pixels[i];
+        pix->x += dx;
       }
     }
     // and operation with pf_x and out
@@ -155,8 +155,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     // if it can then shift it
     if (pf_y) {
       for (int i = 0; i < b.num_pixels; i++) {
-        Pixel *p = b.pixels[i];
-        p->y += dy;
+        Pixel *pix = b.pixels[i];
+        pix->y += dy;
       }
     }
     // and operation with pf_x and out

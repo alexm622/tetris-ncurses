@@ -13,10 +13,12 @@
 #include <game.h>
 #include <gui.h>
 
+#define _BSD_SOURCE
 int maxlines, maxcols;
 Playfield *p;
 WINDOW *tetris_win;
 Block b;
+int score = 0;
 /**
  * @brief handle the ctrl+c from user and clear memory on ctrl-c
  *
