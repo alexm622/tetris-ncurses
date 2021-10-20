@@ -35,7 +35,11 @@ void signal_callback_handler(int signum) {
   freeBlockElements(&b);
   exit(0);
 }
-
+/**
+ * @brief capture the gameover event
+ * 
+ * @param signum 
+ */
 void signal_term_handler(int signum) {
   endwin();
   freePlayfield(p);
