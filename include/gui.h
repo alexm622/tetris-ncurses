@@ -12,5 +12,6 @@ WINDOW* draw_gui();
 void draw_block(Block b);
 void draw_pixel(Pixel * p);
 void draw_playfield(Playfield * pf);
+void draw_score(int score);
 Playfield * initialize_playfield(int width, int height);
 #endif

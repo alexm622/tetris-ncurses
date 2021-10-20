@@ -1,6 +1,6 @@
-#include <string.h>
-#include <stdio.h>
 #include <signal.h>
+#include <stdio.h>
+#include <string.h>
 
 #include <game.h>
 #include <gui.h>
@@ -70,19 +70,17 @@ void addToPlayfield(Block *b, Playfield *p) {
     int y = b->pixels[i]->y;
     Pixel *pix = p->field[x][y];
     // we'll memcopy this instead of copying the register
-    if(y < 0){
+    if (y < 0) {
       gameover = true;
       break;
     }
     memcpy(pix, b->pixels[i], sizeof(struct pixel));
   }
-  if(gameover){
+  if (gameover) {
     raise(SIGTERM);
     return;
   }
   freeBlockElements(b);
-  
-
 }
 // check this after regular bounds checking or it will segfault
 /**
@@ -216,4 +214,83 @@ bool gameOverCheck(Block b) {
     return true && !shift;
   }
   return false;
+}
+/**
+ *
+ * @brief check the playfield for lines and then remove and drow those lines
+ *
+ * @param p
+ *
+ * @return int lines cleared
+ *
+ */
+int checkPlayfield(Playfield *p) {
+  int rowsremoved = 0;
+  for (int i = 0; i < p->height; i++) {
+    bool full = false;
+    for (int j = 0; j < p->width; j++) {
+      Pixel *pix = p->field[j][i];
+      if (pix->empty) {
+        full = false;
+        break;
+      }
+      full = true;
+    }
+    if (full) {
+      removeRow(p, i);
+      rowsremoved++;
+      if (i < p->height) {
+        moveRowsDown(p, i);
+      }
+    }
+  }
+  return rowsremoved;
+}
+/**
+ * @brief remove row at index row
+ *
+ * @param p
+ * @param row the row to be removed
+ *
+ */
+void removeRow(Playfield *p, int row) {
+  for (int i = 0; i < p->width; i++) {
+    p->field[i][row]->empty = false;
+  }
+}
+/**
+ *@brief move all rows down starting in the position of lastrow
+ *
+ *@param lastrow the empty row
+ *@param p
+ *
+ */
+void moveRowsDown(Playfield *p, int lastrow) {
+  // if the row is row 0 (the top) then there is nothing to move downwards
+  if (lastrow == 0) {
+    return;
+  }
+  for (int i = lastrow - 1; i > p > 0; i--) {
+    for (int j = 0; j < p->width; j++) {
+      p->field[j][i + 1]->empty = p->field[j][i]->empty;
+      p->field[j][i]->empty = true;
+    }
+  }
+}
+
+int inc_score(int num_rows, int level) {
+  switch (num_rows) {
+  case 0:
+    return 0;
+  case 1:
+    return 40 * (level + 1);
+  case 2:
+    return 100 * (level + 1);
+  case 3:
+    return 300 * (level + 1);
+  case 4:
+    return 1200 * (level + 1);
+  default:
+    return 0;
+  }
 }

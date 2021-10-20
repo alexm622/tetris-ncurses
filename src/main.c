@@ -19,6 +19,11 @@ Playfield *p;
 WINDOW *tetris_win;
 Block b;
 int score = 0;
+bool drop = false;
+bool block_update = true;
+bool go = false;
+int dx, dy;
+int level = 0;
 /**
  * @brief handle the ctrl+c from user and clear memory on ctrl-c
  *
@@ -65,14 +70,10 @@ int main(void) {
   cbreak();
   refresh();
 
-  b = initBlock(blockGenerator());
+  b = initBlock(O); // blockGenerator());
   p = initialize_playfield(WIDTH, HEIGHT);
-  bool block_update = true;
-  bool go = false;
   // loop that updates the screen at a constant rate
   while (1) {
-    int dx, dy;
-    bool drop = false;
     int down = wgetch(tetris_win);
     switch (down) {
     case KEY_UP:
@@ -96,42 +97,18 @@ int main(void) {
       break;
     }
     tick();
+    if (go) {
+      break;
+    }
     update();
     flushinp();
+    // TODO make this use a deltatime variant?
+    // or implement nanosleep()
     usleep(100000);
-    if (block_update) {
-      bool bx = !shiftBlockX(b, dx);
-      bool by = !shiftBlockY(b, dy);
+    // TODO move this to its own method, and move it into the tick function
 
-      if (!bx) {
-        if (playfieldCollisionCheckX(b, p, dx)) {
-          if (by || !playfieldCollisionCheckY(b, p, dy)) {
-            if (go) {
-              break;
-            }
-            addToPlayfield(&b, p);
-            b = initBlock(blockGenerator());
-          }
-        }
-      }
-      block_update = false;
-    } else {
-      block_update = !updateBlock(b, p, dy, dx, drop);
-      if (drop) {
-        go = gameOverCheck(b);
-        if (go) {
-          break;
-        }
-        addToPlayfield(&b, p);
-        b = initBlock(blockGenerator());
-      }
-      drop = false;
-    }
-    clear();
+    // something something game over
   }
-
-  // something something game over
-
   refresh();
 
   getch();
@@ -139,6 +116,7 @@ int main(void) {
 
   signal_callback_handler(0);
 }
+// TODO function pointers?
 /**
  * @brief the update method that is called to redraw the gui
  *
@@ -147,10 +125,47 @@ void update() {
   maxlines = LINES - 1;
   maxcols = COLS - 1;
   draw_gui(0, 0);
+  draw_score(score);
   draw_playfield(p);
   draw_block(b);
 
   refresh();
 }
+// TODO possibly use an array of function pointers?
+void tick() {
+  tick_gamefield();
+  score += inc_score(checkPlayfield(p), level);
+}
 
-void tick() {}
+void tick_gamefield() {
+  if (block_update) {
+    bool bx = !shiftBlockX(b, dx);
+    bool by = !shiftBlockY(b, dy);
+
+    if (!bx) {
+      if (playfieldCollisionCheckX(b, p, dx)) {
+        if (by || !playfieldCollisionCheckY(b, p, dy)) {
+          if (go) {
+            return;
+          }
+          addToPlayfield(&b, p);
+          b = initBlock(O); // blockGenerator());
+        }
+      }
+    }
+    block_update = false;
+  } else {
+    block_update = !updateBlock(b, p, dy, dx, drop);
+    if (drop) {
+      go = gameOverCheck(b);
+      if (go) {
+        return;
+      }
+      addToPlayfield(&b, p);
+      b = initBlock(O); // blockGenerator());
+    }
+    drop = false;
+  }
+  clear();
+  return;
+}

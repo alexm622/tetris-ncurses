@@ -13,4 +13,11 @@ bool playfieldCollisionCheckX(Block b, Playfield* p, int dx);
 bool playfieldCollisionCheckY(Block b, Playfield* p, int dy);
 
 bool gameOverCheck(Block b);
+
+int checkPlayfield(Playfield *p);
+
+void removeRow(Playfield *p, int row);
+void moveRowsDown(Playfield *p, int lastrow);
+
+int inc_score(int num_rows, int level);
 #endif

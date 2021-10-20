@@ -6,10 +6,10 @@
 #include <blocks.h>
 /**
  * @brief draw the tetris gui
- * 
+ *
  * @param x x offset
  * @param y y offset
- * @return WINDOW* 
+ * @return WINDOW*
  */
 WINDOW *draw_gui(int x, int y) {
   mvprintw(y, x, " _______  _______  _______  ______    ___   _______ ");
@@ -56,7 +56,7 @@ WINDOW *draw_gui(int x, int y) {
 }
 /**
  * @brief draw block b
- * 
+ *
  * @param b the block
  */
 void draw_block(Block b) {
@@ -67,7 +67,7 @@ void draw_block(Block b) {
 }
 /**
  * @brief draw a singular pixel
- * 
+ *
  * @param p the pixel pointer
  */
 void draw_pixel(Pixel *p) {
@@ -78,7 +78,7 @@ void draw_pixel(Pixel *p) {
 }
 /**
  * @brief draw the score on the screen
- * 
+ *
  * @param score the current score
  */
 void draw_score(int score) {
@@ -87,7 +87,7 @@ void draw_score(int score) {
 
 /**
  * @brief draw the whole playfield
- * 
+ *
  * @param pf the playfield pointer
  */
 void draw_playfield(Playfield *pf) {
@@ -99,20 +99,20 @@ void draw_playfield(Playfield *pf) {
 }
 /**
  * @brief initialize the playfield as an empty object
- * 
+ *
  * @param width the width of the playfield
  * @param height the height of the playfield
- * @return Playfield* 
+ * @return Playfield*
  */
 Playfield *initialize_playfield(int width, int height) {
-  //allocate memory for the base playfield pointer
+  // allocate memory for the base playfield pointer
   Playfield *pf = malloc(sizeof(struct playfield));
   pf->width = width;
   pf->height = height;
-  //allocate the memory for the 2d pixel array first dimension
+  // allocate the memory for the 2d pixel array first dimension
   pf->field = malloc(sizeof(struct pixel **) * width);
   for (int i = 0; i < width; i++) {
-    //allocate memory for the second dimension
+    // allocate memory for the second dimension
     pf->field[i] = malloc(sizeof(struct pixel *) * height);
     for (int j = 0; j < height; j++) {
       // make new pixels
@@ -123,6 +123,6 @@ Playfield *initialize_playfield(int width, int height) {
       pf->field[i][j] = p;
     }
   }
-  //return the playfield
+  // return the playfield
   return pf;
 }
