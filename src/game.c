@@ -22,7 +22,7 @@ bool updateBlock(Block b, Playfield *p, int dy, int dx, bool drop) {
 bool shiftBlockX(Block b, int dx) {
   for (int i = 0; i < b.num_pixels; i++) {
     Pixel *p = b.pixels[i];
-    if ((p->x + dx > WIDTH || p->x + dx < 0)) {
+    if ((p->x + dx >= WIDTH || p->x + dx < 0)) {
       return false;
     }
   }
@@ -270,7 +270,7 @@ void moveRowsDown(Playfield *p, int lastrow) {
   if (lastrow == 0) {
     return;
   }
-  for (int i = lastrow - 1; i > p > 0; i--) {
+  for (int i = lastrow - 1; i > 0; i--) {
     for (int j = 0; j < p->width; j++) {
       p->field[j][i + 1]->empty = p->field[j][i]->empty;
       p->field[j][i]->empty = true;
