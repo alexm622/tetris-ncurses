@@ -107,7 +107,6 @@ int main(void) {
     usleep(100000);
     // TODO move this to its own method, and move it into the tick function
 
-    // something something game over
   }
   refresh();
 
@@ -116,7 +115,6 @@ int main(void) {
 
   signal_callback_handler(0);
 }
-// TODO function pointers?
 /**
  * @brief the update method that is called to redraw the gui
  *
@@ -131,7 +129,6 @@ void update() {
 
   refresh();
 }
-// TODO possibly use an array of function pointers?
 void tick() {
   tick_gamefield();
   score += inc_score(checkPlayfield(p), level);
