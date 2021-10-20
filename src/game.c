@@ -239,7 +239,7 @@ int checkPlayfield(Playfield *p) {
     if (full) {
       removeRow(p, i);
       rowsremoved++;
-      if (i < p->height) {
+      if (i > 0) {
         moveRowsDown(p, i);
       }
     }
@@ -255,7 +255,7 @@ int checkPlayfield(Playfield *p) {
  */
 void removeRow(Playfield *p, int row) {
   for (int i = 0; i < p->width; i++) {
-    p->field[i][row]->empty = false;
+    p->field[i][row]->empty = true;
   }
 }
 /**

@@ -74,7 +74,7 @@ void draw_pixel(Pixel *p) {
   if (p->empty) {
     return;
   }
-  mvaddwstr(p->y + YOFF + 1, p->x + XOFF + 1, L"█");
+  mvaddwstr(p->y + YOFF + 1, p->x + XOFF + 1, L"▯");
 }
 /**
  * @brief draw the score on the screen
