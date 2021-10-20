@@ -1,0 +1,21 @@
+project: #[project directory path] [default: "./"]
+extensions: #[required]
+ - c
+ - h
+license: ./LICENSE_HEADER #[license file path or url] [required]
+# Example license template:
+# Copyright {{year}} {{owner}}
+# template should be
+template:
+ project: alexm622/tetris-ncurses
+ year: 2021
+ organization: Alexander Comeau
+ignore:
+ - /src/*.o
+ - .vscode
+ - .ccls-cache
+ - ./README.md
+ - ./LICENSE
+ - ./tetris
+ - ./log
+ - ./compile-commands.json
