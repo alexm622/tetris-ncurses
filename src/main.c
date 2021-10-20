@@ -129,11 +129,18 @@ void update() {
 
   refresh();
 }
+/**
+ * @brief update gamefield objects/positions
+ * 
+ */
 void tick() {
   tick_gamefield();
   score += inc_score(checkPlayfield(p), level);
 }
-
+/**
+ * @brief update the gamefield
+ * 
+ */
 void tick_gamefield() {
   if (block_update) {
     bool bx = !shiftBlockX(b, dx);
