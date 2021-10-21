@@ -2,17 +2,17 @@
 
  alexm622/tetris-ncurses
  Copyright (C) 2021  Alexander Comeau
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -45,7 +45,6 @@ bool shiftBlockX(Block b, int dx) {
       return false;
     }
   }
-
   return true;
 }
 /**
@@ -118,7 +117,7 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
   if (drop) {
     int dy_n =
         0; /** the new deltay which drops the block the lowest that it can go */
-    for (int i = 0; i <= HEIGHT; i++) {
+    for (int i = 0; i <= p->height; i++) {
       bool out_y = shiftBlockY(b, i);
       if (!out_y) {
         // if cannot shift block any lower then we save the distance from the
@@ -229,7 +228,7 @@ bool playfieldCollisionCheckY(Block b, Playfield *p, int dy) {
  */
 bool gameOverCheck(Block b) {
   bool shift = shiftBlockY(b, 1);
-  if (b.pixels[0]->y < 20) {
+  if (b.pixels[0]->y < 5) {
     return true && !shift;
   }
   return false;
