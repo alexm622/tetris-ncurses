@@ -172,9 +172,6 @@ void tick_gamefield() {
     if (!bx) {
       if (playfieldCollisionCheckX(b, p, dx)) {
         if (by || !playfieldCollisionCheckY(b, p, dy)) {
-          if (go) {
-            return;
-          }
           addToPlayfield(&b, p);
           b = initBlock(O); // blockGenerator());
         }
@@ -184,10 +181,6 @@ void tick_gamefield() {
   } else {
     block_update = !updateBlock(b, p, dy, dx, drop);
     if (drop) {
-      go = gameOverCheck(b);
-      if (go) {
-        return;
-      }
       addToPlayfield(&b, p);
       b = initBlock(O); // blockGenerator());
     }

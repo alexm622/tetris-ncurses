@@ -69,6 +69,7 @@ bool shiftBlockY(Block b, int dy) {
   for (int i = 0; i < b.num_pixels; i++) {
     Pixel *p = b.pixels[(i + y_low_ind) % b.num_pixels];
     if ((p->y + dy >= HEIGHT)) {
+      
       return false;
     }
   }
@@ -88,7 +89,7 @@ void addToPlayfield(Block *b, Playfield *p) {
     int y = b->pixels[i]->y;
     Pixel *pix = p->field[x][y];
     // we'll memcopy this instead of copying the register
-    if (y < 0) {
+    if (y <=1) {
       gameover = true;
       break;
     }
@@ -163,6 +164,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     }
     // and operation with pf_x and out
     out &= pf_x;
+  }if(!out_x){
+    gameOverCheck(b);
   }
   // we need to test this so the program doesn't segfault
   if (out_y) {
@@ -174,6 +177,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
         Pixel *pix = b.pixels[i];
         pix->y += dy;
       }
+    }else{
+      gameOverCheck(b);
     }
     // and operation with pf_x and out
     out &= pf_y;
