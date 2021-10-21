@@ -19,6 +19,7 @@
 
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include <game.h>
@@ -69,7 +70,7 @@ bool shiftBlockY(Block b, int dy) {
   for (int i = 0; i < b.num_pixels; i++) {
     Pixel *p = b.pixels[(i + y_low_ind) % b.num_pixels];
     if ((p->y + dy >= HEIGHT)) {
-      
+
       return false;
     }
   }
@@ -89,7 +90,7 @@ void addToPlayfield(Block *b, Playfield *p) {
     int y = b->pixels[i]->y;
     Pixel *pix = p->field[x][y];
     // we'll memcopy this instead of copying the register
-    if (y <=1) {
+    if (y <= 1) {
       gameover = true;
       break;
     }
@@ -164,7 +165,8 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
     }
     // and operation with pf_x and out
     out &= pf_x;
-  }if(!out_x){
+  }
+  if (!out_x) {
     gameOverCheck(b);
   }
   // we need to test this so the program doesn't segfault
@@ -177,7 +179,7 @@ bool playfieldCollisionCheck(Block b, Playfield *p, int dx, int dy, bool drop) {
         Pixel *pix = b.pixels[i];
         pix->y += dy;
       }
-    }else{
+    } else {
       gameOverCheck(b);
     }
     // and operation with pf_x and out
@@ -316,4 +318,16 @@ int inc_score(int num_rows, int level) {
   default:
     return 0;
   }
+}
+/**
+ *@brief rotate block b rotation * 90 degrees clockwise
+ *
+ *@param b block to be rotated
+ *
+ * @param rotation the number of times to rotate 90 degrees, positive for
+ *clockwise negative for cclockwise
+ */
+void rotateBlock(Block *b, int rotation) {
+  // rotate the block based off of the stored enum
+  return;
 }

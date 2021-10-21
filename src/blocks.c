@@ -2,17 +2,17 @@
 
  alexm622/tetris-ncurses
  Copyright (C) 2021  Alexander Comeau
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -27,16 +27,15 @@
 
 /**
  * @brief create a new block pointer/object
- * 
+ *
  * @param b_type the block type as an enum
- * @return Block 
+ * @return Block
  */
 Block initBlock(BLOCK b_type) {
   Block out;
   out.num_pixels = 4;
   out.b = b_type;
-  switch (b_type)
-  {
+  switch (b_type) {
   case I:
     out.pixels = initI();
     break;
@@ -66,8 +65,8 @@ Block initBlock(BLOCK b_type) {
 }
 /**
  * @brief init the block L
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initL() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -88,8 +87,8 @@ Pixel **initL() {
 }
 /**
  * @brief init the block J
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initJ() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -110,8 +109,8 @@ Pixel **initJ() {
 }
 /**
  * @brief init the block I
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initI() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -127,8 +126,8 @@ Pixel **initI() {
 }
 /**
  * @brief init the block S
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initS() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -146,8 +145,8 @@ Pixel **initS() {
 }
 /**
  * @brief init the block Z
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initZ() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -165,8 +164,8 @@ Pixel **initZ() {
 }
 /**
  * @brief init the block O
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initO() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -184,8 +183,8 @@ Pixel **initO() {
 }
 /**
  * @brief init a block of type T
- * 
- * @return Pixel** 
+ *
+ * @return Pixel**
  */
 Pixel **initT() {
   struct pixel **out = calloc(4, sizeof(struct pixel *));
@@ -206,14 +205,13 @@ Pixel **initT() {
 }
 /**
  * @brief generate a random block
- * 
- * @return BLOCK 
+ *
+ * @return BLOCK
  */
-BLOCK blockGenerator(){
+BLOCK blockGenerator() {
   int r = rand();
   r %= 7;
-  switch (r)
-  {
+  switch (r) {
   case 0:
     return I;
   case 1:
@@ -235,25 +233,25 @@ BLOCK blockGenerator(){
 }
 /**
  * @brief free all the elements/pixels in block b
- * 
- * @param b 
+ *
+ * @param b
  */
-void freeBlockElements(Block * b){
+void freeBlockElements(Block *b) {
   int num_pixels = b->num_pixels;
-  for(int i = 0; i < num_pixels; i++){
+  for (int i = 0; i < num_pixels; i++) {
     free(b->pixels[i]);
   }
   free(b->pixels);
 }
 /**
  * @brief free the playfield
- * 
+ *
  * @param p the playfield object as a pointer
  */
-void freePlayfield(Playfield * p){
-  for(int i = 0; i< WIDTH; i++){
-    //free whole row on column i
-    for(int j = 0; j < HEIGHT; j++){
+void freePlayfield(Playfield *p) {
+  for (int i = 0; i < WIDTH; i++) {
+    // free whole row on column i
+    for (int j = 0; j < HEIGHT; j++) {
       free(p->field[i][j]);
     }
     free(p->field[i]);
