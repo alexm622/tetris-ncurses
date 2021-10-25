@@ -328,6 +328,97 @@ int inc_score(int num_rows, int level) {
  *clockwise negative for cclockwise
  */
 void rotateBlock(Block *b, int rotation) {
-  // rotate the block based off of the stored enum
+  // rotate based of a matrix of width = width of the block and the height =
+  // height of the stored block
+  int width /** the width of the block */, height; /** height of the block */
+  int least = 0, most = 0;
+
+  for (int i = 0; i < 4; i++) {
+    least = (least > b->pixels[i]->x) ? least : b->pixels[i]->x;
+    most = (most < b->pixels[i]->x) ? most : b->pixels[i]->x;
+  }
+  int leastx = least; /** the top left x corner */
+  width = most - least;
+  for (int i = 0; i < 4; i++) {
+    least = (least > b->pixels[i]->y) ? least : b->pixels[i]->y;
+    most = (most < b->pixels[i]->y) ? most : b->pixels[i]->y;
+  }
+  int leasty = least; /** the top left y corner */
+  height = most - least;
+  // demensions of the matrix are width and height (x,y)
+  // the final matrix will be height, width (x, y)
+  Pixel **start_matrix = malloc(width * sizeof(struct pixel *));
+  // allocate memory for start matrix
+  for (int i = 0; i < width; i++) {
+    start_matrix[i] = calloc(height, sizeof(struct pixel));
+  }
+  Pixel **end_matrix = malloc(height * sizeof(struct pixel *));
+  // allocate memory for end matrix
+  for (int i = 0; i < height; i++) {
+    end_matrix[i] = calloc(width, sizeof(struct pixel));
+  }
+  // initialize start matrix with coordinates
+  for (int i = 0; i < width; i++) {
+    for (int j = 0; j < height; j++) {
+      start_matrix[i][j].x = i + leastx;
+      start_matrix[i][j].y = i + leasty;
+      start_matrix[i][j].empty = true;
+    }
+  }
+
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      end_matrix[i][j].x = i + leastx;
+      end_matrix[i][j].y = i + leasty;
+      end_matrix[i][j].empty = true;
+    }
+  }
+
+  for (int i = 0; i < 4; i++) {
+    Pixel *p = b->pixels[i];
+    start_matrix[p->x - leastx][p->y - leasty].empty = false;
+    start_matrix[p->x - leastx][p->y - leasty].x = p->x;
+    start_matrix[p->x - leastx][p->y - leasty].y = p->y;
+  }
+
+  // turn the rotation into a positive value
+  while (rotation < 0) {
+    rotation += 4;
+  }
+
+  bool start_or_end = false;
+
+  // rotate the matrix;
+  for (int rot = 0; rot < rotation; rot++) {
+    if (rot % 2 == 0) {
+      start_or_end = false;
+      for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+          end_matrix[j][i].empty = start_matrix[i][j].empty;
+        }
+      }
+    } else {
+      start_or_end = true;
+      for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+          start_matrix[j][i].empty = end_matrix[i][j].empty;
+        }
+      }
+    }
+  }
+
+  // map start or end to the pixels in the block
+  int loc = 0;
+  for (int i = 0; i < (start_or_end) ? width : height; i++) {
+    for (int j = 0; j < (start_or_end) ? height : width; j++) {
+      if (((start_or_end) ? end_matrix : start_matrix)[i][j].empty) {
+        b->pixels[loc]->x =
+            ((start_or_end) ? end_matrix : start_matrix)[i][j].x;
+        b->pixels[loc]->y =
+            ((start_or_end) ? end_matrix : start_matrix)[i][j].y;
+        loc++;
+      }
+    }
+  }
   return;
 }

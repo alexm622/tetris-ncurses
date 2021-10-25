@@ -2,17 +2,17 @@
 
  alexm622/tetris-ncurses
  Copyright (C) 2021  Alexander Comeau
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU Affero General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU Affero General Public License for more details.
- 
+
  You should have received a copy of the GNU Affero General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
@@ -56,8 +56,8 @@ void signal_callback_handler(int signum) {
 }
 /**
  * @brief capture the gameover event
- * 
- * @param signum 
+ *
+ * @param signum
  */
 void signal_term_handler(int signum) {
   endwin();
@@ -98,9 +98,10 @@ int main(void) {
   // loop that updates the screen at a constant rate
   while (1) {
     int down = wgetch(tetris_win);
+    int rot = 0;
     switch (down) {
     case KEY_UP:
-      dy = -1;
+      rot = 1;
       break;
     case KEY_DOWN:
       dy = 2;
@@ -129,7 +130,6 @@ int main(void) {
     // or implement nanosleep()
     usleep(100000);
     // TODO move this to its own method, and move it into the tick function
-
   }
   refresh();
 
@@ -154,7 +154,7 @@ void update() {
 }
 /**
  * @brief update gamefield objects/positions
- * 
+ *
  */
 void tick() {
   tick_gamefield();
@@ -162,7 +162,7 @@ void tick() {
 }
 /**
  * @brief update the gamefield
- * 
+ *
  */
 void tick_gamefield() {
   if (block_update) {
