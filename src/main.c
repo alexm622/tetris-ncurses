@@ -43,6 +43,7 @@ bool block_update = true;
 bool go = false;
 int dx, dy;
 int level = 0;
+int rot = 0;
 /**
  * @brief handle the ctrl+c from user and clear memory on ctrl-c
  *
@@ -93,12 +94,11 @@ int main(void) {
   cbreak();
   refresh();
 
-  b = initBlock(O); // blockGenerator());
+  b = initBlock(blockGenerator());
   p = initialize_playfield(WIDTH, HEIGHT);
   // loop that updates the screen at a constant rate
   while (1) {
     int down = wgetch(tetris_win);
-    int rot = 0;
     switch (down) {
     case KEY_UP:
       rot = 1;
@@ -173,16 +173,19 @@ void tick_gamefield() {
       if (playfieldCollisionCheckX(b, p, dx)) {
         if (by || !playfieldCollisionCheckY(b, p, dy)) {
           addToPlayfield(&b, p);
-          b = initBlock(O); // blockGenerator());
+          b = initBlock(blockGenerator());
         }
       }
     }
     block_update = false;
   } else {
+    if (rot != 0) {
+      rotateBlock(&b, rot);
+    }
     block_update = !updateBlock(b, p, dy, dx, drop);
     if (drop) {
       addToPlayfield(&b, p);
-      b = initBlock(O); // blockGenerator());
+      b = initBlock(blockGenerator());
     }
     drop = false;
   }

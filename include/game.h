@@ -39,4 +39,6 @@ void removeRow(Playfield *p, int row);
 void moveRowsDown(Playfield *p, int lastrow);
 
 int inc_score(int num_rows, int level);
+
+void rotateBlock(Block *b, int rotation);
 #endif
