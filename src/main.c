@@ -181,6 +181,7 @@ void tick_gamefield() {
   } else {
     if (rot != 0) {
       rotateBlock(&b, rot);
+      rot = 0;
     }
     block_update = !updateBlock(b, p, dy, dx, drop);
     if (drop) {

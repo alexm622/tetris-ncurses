@@ -417,9 +417,10 @@ void rotateBlock(Block *b, int rotation) {
 
   // map start or end to the pixels in the block
   int loc = 0;
-  for (int i = 0; i < ((start_or_end) ? width : height); i++) {
-    for (int j = 0; j < ((start_or_end) ? height : width); j++) {
-      if (((start_or_end) ? end_matrix : start_matrix)[i][j]->empty) {
+  for (int i = 0; i < ((start_or_end) ? height : width); i++) {
+    for (int j = 0; j < ((start_or_end) ? width : height); j++) {
+      Pixel ***matrix = (start_or_end) ? end_matrix : start_matrix;
+      if (matrix[i][j]->empty) {
         b->pixels[loc]->x =
             ((start_or_end) ? end_matrix : start_matrix)[i][j]->x;
         b->pixels[loc]->y =
