@@ -427,7 +427,28 @@ void rotateBlock(Block *b, int rotation) {
             ((start_or_end) ? end_matrix : start_matrix)[i][j]->y;
         loc++;
       }
+      free(matrix);
     }
   }
+  //free all the resources
+  // allocate memory for start matrix
+  for (int i = 0; i < width; i++) {
+    for(int j = 0; j < height; j++){
+      free(start_matrix[i][j]);
+    }
+    free(start_matrix[i]);
+  }
+  free(start_matrix);
+  // allocate memory for end matrix
+  for (int i = 0; i < height; i++) {
+    for(int j = 0; j < width; j++){
+      free(end_matrix[i][j]);
+    }
+    free(end_matrix[i]);
+  }
+  free(end_matrix);
+  
+
+
   return;
 }
